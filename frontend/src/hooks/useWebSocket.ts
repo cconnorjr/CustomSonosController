@@ -28,22 +28,18 @@ export function useWebSocket() {
 
         if (typeof msg !== 'object' || msg === null || !('type' in msg)) return
 
-        const { type } = msg as { type: string }
+        const data = msg as Record<string, unknown>
+        const type = data.type as string
 
         if (
           (type === 'FULL_STATE' || type === 'STATE_UPDATE') &&
-          'speakers' in (msg as object) &&
-          Array.isArray((msg as { speakers: unknown }).speakers)
+          Array.isArray(data.speakers)
         ) {
-          upsertSpeakers((msg as { speakers: SpeakerState[] }).speakers)
+          upsertSpeakers(data.speakers as SpeakerState[])
         }
 
-        if (
-          type === 'GROUP_UPDATE' &&
-          'groups' in (msg as object) &&
-          Array.isArray((msg as { groups: unknown }).groups)
-        ) {
-          setGroups((msg as { groups: GroupState[] }).groups)
+        if (type === 'GROUP_UPDATE' && Array.isArray(data.groups)) {
+          setGroups(data.groups as GroupState[])
         }
       }
 
