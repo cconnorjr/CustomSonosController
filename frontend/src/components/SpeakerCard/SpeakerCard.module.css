@@ -1,0 +1,68 @@
+.card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: opacity 0.2s;
+}
+
+.offline {
+  opacity: 0.5;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.groupBadge {
+  font-size: 11px;
+  color: #1db954;
+  font-weight: 500;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 4px;
+}
+
+.online {
+  background: #1db954;
+}
+
+.offlineDot {
+  background: #555;
+}
+
+.queueToggle {
+  background: none;
+  border: 1px solid #444;
+  border-radius: 6px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 10px;
+  align-self: flex-start;
+}
+
+.queueToggle:hover {
+  background: #2a2a2a;
+  color: #fff;
+}

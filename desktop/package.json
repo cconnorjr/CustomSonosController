@@ -1,0 +1,16 @@
+{
+  "name": "sonos-controller-desktop",
+  "version": "0.1.0",
+  "description": "Sonos Controller Desktop App",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}

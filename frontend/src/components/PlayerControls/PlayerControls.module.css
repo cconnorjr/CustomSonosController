@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.trackInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+}
+
+.albumArt {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.trackText {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.trackTitle {
+  font-weight: 600;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trackArtist {
+  font-size: 12px;
+  color: #888;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.buttons button {
+  background: none;
+  border: 1px solid #444;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 10px;
+  color: inherit;
+  transition: background 0.15s;
+}
+
+.buttons button:hover:not(:disabled) {
+  background: #2a2a2a;
+}
+
+.buttons button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.playPause {
+  font-size: 22px !important;
+  padding: 6px 14px !important;
+}
