@@ -66,10 +66,13 @@ if not exist "%ROOT%backend\.venv\Scripts\uvicorn.exe" (
         pause
         exit /b 1
     )
+    echo       Upgrading pip and build tools...
+    "%ROOT%backend\.venv\Scripts\python.exe" -m pip install --upgrade pip setuptools wheel --quiet
     echo       Installing Python dependencies...
-    "%ROOT%backend\.venv\Scripts\pip" install -e "%ROOT%backend" --quiet
+    "%ROOT%backend\.venv\Scripts\pip" install -e "%ROOT%backend"
     if errorlevel 1 (
         echo ERROR: Failed to install Python dependencies.
+        echo Check the output above for details.
         pause
         exit /b 1
     )
@@ -81,9 +84,11 @@ if not exist "%ROOT%backend\.venv\Scripts\uvicorn.exe" (
 "%ROOT%backend\.venv\Scripts\python.exe" -c "import soco; import fastapi; import uvicorn" >nul 2>&1
 if errorlevel 1 (
     echo WARNING: Virtual environment appears incomplete. Reinstalling...
-    "%ROOT%backend\.venv\Scripts\pip" install -e "%ROOT%backend" --quiet
+    "%ROOT%backend\.venv\Scripts\python.exe" -m pip install --upgrade pip setuptools wheel --quiet
+    "%ROOT%backend\.venv\Scripts\pip" install -e "%ROOT%backend"
     if errorlevel 1 (
         echo ERROR: Failed to install Python dependencies.
+        echo Check the output above for details.
         pause
         exit /b 1
     )
