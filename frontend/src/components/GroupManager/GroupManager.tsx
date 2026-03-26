@@ -5,10 +5,12 @@ import styles from './GroupManager.module.css'
 
 export function GroupManager() {
   const speakers = useAppStore((s) => s.speakers)
+  const groups = useAppStore((s) => s.groups)
   const uids = Object.keys(speakers).filter((uid) => speakers[uid].is_online)
   const [coordinatorUid, setCoordinatorUid] = useState('')
   const [selectedMembers, setSelectedMembers] = useState<string[]>([])
   const [status, setStatus] = useState('')
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
 
   const handleGroup = async () => {
     if (!coordinatorUid || selectedMembers.length === 0) return
@@ -37,6 +39,20 @@ export function GroupManager() {
       prev.includes(uid) ? prev.filter((u) => u !== uid) : [...prev, uid],
     )
   }
+
+  const toggleGroupExpanded = (groupUid: string) => {
+    setExpandedGroups((prev) => {
+      const next = new Set(prev)
+      if (next.has(groupUid)) {
+        next.delete(groupUid)
+      } else {
+        next.add(groupUid)
+      }
+      return next
+    })
+  }
+
+  const activeGroups = groups.filter((g) => g.member_uids.length > 1)
 
   return (
     <section className={styles.section}>
@@ -86,6 +102,44 @@ export function GroupManager() {
         </button>
         {status && <span className={styles.status}>{status}</span>}
       </div>
+
+      {activeGroups.length > 0 && (
+        <div className={styles.activeGroups}>
+          <h3 className={styles.subheading}>Active Groups</h3>
+          {activeGroups.map((group) => {
+            const isExpanded = expandedGroups.has(group.group_uid)
+            return (
+              <div key={group.group_uid} className={styles.groupItem}>
+                <button
+                  className={styles.groupHeader}
+                  onClick={() => toggleGroupExpanded(group.group_uid)}
+                  aria-expanded={isExpanded}
+                >
+                  <span className={styles.groupChevron} data-expanded={isExpanded}>
+                    &#9654;
+                  </span>
+                  <span className={styles.groupName}>{group.coordinator_name}</span>
+                  <span className={styles.groupCount}>
+                    {group.member_uids.length} speaker{group.member_uids.length !== 1 && 's'}
+                  </span>
+                </button>
+                {isExpanded && (
+                  <ul className={styles.memberList}>
+                    {group.member_uids.map((memberUid, i) => (
+                      <li key={memberUid} className={styles.memberItem}>
+                        {group.member_names[i] ?? memberUid}
+                        {memberUid === group.coordinator_uid && (
+                          <span className={styles.coordinatorBadge}>coordinator</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )
+          })}
+        </div>
+      )}
 
       <div className={styles.currentGroups}>
         <h3 className={styles.subheading}>Ungroup a speaker</h3>
